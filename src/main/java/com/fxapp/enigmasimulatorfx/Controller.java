@@ -125,8 +125,6 @@ public class Controller implements Initializable {
         stage = new Stage();
         info = new Popup();
 
-
-
         if(count < 1){
             leftRotorStartPos = enigmaDevice.getLeftRotor().alphabet.get(0);
             midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
@@ -140,8 +138,6 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
 
         lightMap = new HashMap<String, StackPane>();
         buttonMap = new HashMap<String, Button>();
@@ -317,8 +313,6 @@ public class Controller implements Initializable {
                 Label lbl = new Label("Maximum message length reached");
                 Button btnOk = new Button("Ok");
                 pane.getChildren().addAll(lbl,btnOk);
-                pane.setPrefWidth(200);
-                pane.setPrefHeight(50);
                 pane.setAlignment(Pos.CENTER);
                 info.getContent().add(pane);
                 info.show(stage);
@@ -442,8 +436,6 @@ public class Controller implements Initializable {
                 Label lbl = new Label("Maximum message length reached");
                 Button btnOk = new Button("Ok");
                 pane.getChildren().addAll(lbl,btnOk);
-                pane.setPrefWidth(200);
-                pane.setPrefHeight(50);
                 pane.setAlignment(Pos.CENTER);
                 info.getContent().add(pane);
                 info.show(stage);
@@ -502,27 +494,29 @@ public class Controller implements Initializable {
         dialog.getDialogPane().getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
         dialog.setTitle("Add Plug");
         dialog.setGraphic(null);
-        dialog.setHeaderText("Enter the first letter to connect the plug to");
+        dialog.setHeaderText("Enter first plus letter");
 
-        String a = plugDialog(dialog);
+        String firstLetter = plugDialog(dialog);
 
-        if (a == null) return;
-
-        dialog.getEditor().setText("");
-        dialog.setHeaderText("Enter the second letter to connect the plug to");
-
-        String b = plugDialog(dialog);
-
-        while (a.equals(b)) {
-            dialog.setHeaderText("Cannot plug a letter into itself. Please choose another letter.");
-            b = plugDialog(dialog);
+        if (firstLetter == null) {
+            return;
         }
 
-        if (b == null) return;
+        dialog.getEditor().setText("");
+        dialog.setHeaderText("Enter second plug letter");
 
-        enigmaDevice.getPlugboard().addPlug(a, b);
+        String secondLetter = plugDialog(dialog);
 
+        while (firstLetter.equals(secondLetter)) {
+            dialog.setHeaderText("Cannot plug firstLetter letter into itself. Please choose another letter.");
+            secondLetter = plugDialog(dialog);
+        }
 
+        if (secondLetter == null) {
+            return;
+        };
+
+        enigmaDevice.getPlugboard().addPlug(firstLetter, secondLetter);
     }
 
 
