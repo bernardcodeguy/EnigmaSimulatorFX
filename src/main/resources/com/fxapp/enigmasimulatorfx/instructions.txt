@@ -1,0 +1,7 @@
+ INSTRUCTIONS
+___________________________________________________________________________________
+1.Use the arrows of the rotors to configure their starting positions
+2.Use the plug in and out icons to configure plugboard
+3.To decrypt message open the encrpyted text file and set settings before decoding
+4.Use the mute and unmute button to turn on/of sound
+___________________________________________________________________________________
