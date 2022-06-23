@@ -18,7 +18,7 @@
    <children>
       <HBox fx:id="motherPane" alignment="CENTER" maxWidth="800.0">
          <children>
-            <VBox alignment="CENTER" minHeight="400.0" minWidth="300.0">
+            <VBox fx:id="enigmaPane" alignment="CENTER" minHeight="400.0" minWidth="300.0">
                <children>
                   <HBox>
                      <VBox.margin>

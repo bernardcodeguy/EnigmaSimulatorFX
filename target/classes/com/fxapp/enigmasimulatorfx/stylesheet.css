@@ -6,13 +6,6 @@
 
 
 .text-area {
-    /*
-    You can use normal font
-    Just uncomment line 12 and 13 and comment line 16 and 17
-    -fx-font-size: 18;
-    -fx-font-family: "System";
-    */
-
     -fx-font-size: 28;
     -fx-font-family: "Bohemian Typewriter";
     -fx-text-fill: white;
@@ -108,10 +101,14 @@
     -fx-border-radius: 2px;
 }
 
-#motherPane{
+#enigmaPane{
     -fx-background-color: rgb(0, 0, 0);
     -fx-border-color: #E5AA70;
     -fx-border-width: 8px;
+}
+
+#motherPane{
+    -fx-background-color: rgb(0, 0, 0);
 }
 
 
