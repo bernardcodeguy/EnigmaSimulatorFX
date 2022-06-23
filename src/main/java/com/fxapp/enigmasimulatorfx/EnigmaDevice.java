@@ -25,13 +25,13 @@ public class EnigmaDevice {
         // The algorithm that switches the letters
         // It uses methods from above objects on an enigma machine
         String plugged = plugboard.switchLetter(letter);
-        String one = rightRotor.pass(plugged);
-        String two = midRotor.pass(one);
-        String three = leftRotor.pass(two);
+        String one = rightRotor.switchLetter(plugged);
+        String two = midRotor.switchLetter(one);
+        String three = leftRotor.switchLetter(two);
         String reflect = Reflector.reflect(three);
-        String four = leftRotor.invPass(reflect);
-        String five = midRotor.invPass(four);
-        String six = rightRotor.invPass(five);
+        String four = leftRotor.invSwitchLetter(reflect);
+        String five = midRotor.invSwitchLetter(four);
+        String six = rightRotor.invSwitchLetter(five);
         plugged = plugboard.switchLetter(six);
 
         // Rotating the rotors when the position of right rotor is at "W" and "F"

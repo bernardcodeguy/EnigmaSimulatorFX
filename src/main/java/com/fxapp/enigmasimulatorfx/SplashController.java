@@ -56,10 +56,10 @@ public class SplashController implements Initializable {
                         scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
                         Image img = new Image(getClass().getResource("enigma_logo.png").toExternalForm());
                         Stage stage = new Stage();
+                        stage.setTitle("Enigma Simulator");
                         stage.getIcons().add(img);
                         MainController mainController = (MainController)loader.getController();
                         mainController.setPrimaryStage(stage);
-
                         // Making sure to escape same keyboard presses on the physical keyboard
                         scene.addEventFilter(KeyEvent.ANY, e -> {
                             if (e.getText().isBlank()) {

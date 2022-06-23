@@ -4,7 +4,7 @@
 
 package com.fxapp.enigmasimulatorfx;
 
-public class EnigmaSoft {
+public class Main {
 
     public static void main(String[] args) {
         EnigmaApp.main(args);

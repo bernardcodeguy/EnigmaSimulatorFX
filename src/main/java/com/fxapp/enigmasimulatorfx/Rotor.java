@@ -28,14 +28,14 @@ public class Rotor {
     }
 
     // A method to pass a letter to rotor alphabets and plugboards
-    public String pass(String letter) {
+    public String switchLetter(String letter) {
         int i = alpha.indexOf(letter);
         String c = alphabet.get(i);
         return c;
     }
 
     // Method for switches related to rotors and reflector
-    public String invPass(String letter) {
+    public String invSwitchLetter(String letter) {
         int i = alphabet.indexOf(letter);
         String c = alpha.substring(i, i+1);
         return c;

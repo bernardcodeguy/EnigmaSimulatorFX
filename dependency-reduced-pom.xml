@@ -18,7 +18,7 @@
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <transformers>
                 <transformer>
-                  <mainClass>com.fxapp.enigmasimulatorfx.EnigmaSoft</mainClass>
+                  <mainClass>com.fxapp.enigmasimulatorfx.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

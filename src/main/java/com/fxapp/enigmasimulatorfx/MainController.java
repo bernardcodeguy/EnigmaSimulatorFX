@@ -47,7 +47,7 @@ public class MainController implements Initializable {
     private Button btnRemovePlug;
 
     @FXML
-    private Button btnClear;
+    private Button btnNewMsg;
 
     @FXML
     private Button btnExport;
@@ -362,10 +362,20 @@ public class MainController implements Initializable {
         });
 
         // This event is called when the clear  button is pressed
-        btnClear.setOnAction(e -> {
+        btnNewMsg.setOnAction(e -> {
             if(unmuted){
                 button_click.play();
             }
+
+            btnAddPlug.setDisable(false);
+            btnRemovePlug.setDisable(false);
+            leftRotorUp.setDisable(false);
+            leftRotorDown.setDisable(false);
+            midRotorUp.setDisable(false);
+            midRotorDown.setDisable(false);
+            rightRotorUp.setDisable(false);
+            rightRotorDown.setDisable(false);
+
             // Revert the count to zero for new settings
             count = 0;
             content = "";
@@ -381,6 +391,15 @@ public class MainController implements Initializable {
 
         // This even occurs when you press the physical keyboard
         parent.setOnKeyPressed(event -> {
+            btnAddPlug.setDisable(true);
+            btnRemovePlug.setDisable(true);
+            leftRotorUp.setDisable(true);
+            leftRotorDown.setDisable(true);
+            midRotorUp.setDisable(true);
+            midRotorDown.setDisable(true);
+            rightRotorUp.setDisable(true);
+            rightRotorDown.setDisable(true);
+
             // Checks if the length of the message has reached 200
             if(content.length() == 200){
                if(!info.isShowing()){
@@ -409,10 +428,10 @@ public class MainController implements Initializable {
             for(String row : keys) {
                 if (row.indexOf(key) != -1 && !key.isBlank()) {
                     // Switching the letter before the writer can see and right in text area
-                    String encoded = enigmaDevice.switchLetter(key);
-                    turnOnLight(encoded);
+                    String cypherTextLetter = enigmaDevice.switchLetter(key);
+                    turnOnLight(cypherTextLetter);
                     buttonMap.get(key).setStyle("-fx-background-color:rgb(93, 77, 58);");
-                    taEncrytedWriterMsg.appendText(encoded);
+                    taEncrytedWriterMsg.appendText(cypherTextLetter);
                     Task<Void> sleeper = new Task<Void>() {
                         @Override
                         protected Void call() throws Exception {
@@ -445,9 +464,10 @@ public class MainController implements Initializable {
                         "===================================================================================\n" +
                         "1. Use the arrows of the rotors to configure their starting positions\n" +
                         "2. Use the plug in and out icons to configure plugboard\n" +
-                        "3. To export the encrypted message as a text file, click on the 'Export Message' button and select location to export\n" +
-                        "4. To decrypt message open the encrpyted text file and set settings before typeing to decode message\n" +
-                        "5. Use the mute and unmute button to turn on/of sound\n" +
+                        "4. Make sure to configure your settings before typing in the messages\n"+
+                        "5. To export the encrypted message as a text file, click on the 'Export Message' button and select location to export\n" +
+                        "6. To decrypt a message, open the encrypted text file and set settings before typing to decode message\n" +
+                        "7. Use the mute and unmute button to turn on/of sound\n" +
                         "===================================================================================";
 
                 pane.getChildren().add(new Label(ins));
@@ -526,6 +546,16 @@ public class MainController implements Initializable {
 
     // Virtual keyboard press called
     private void keyboardPressedAction(ActionEvent e) {
+
+        btnAddPlug.setDisable(true);
+        btnRemovePlug.setDisable(true);
+        leftRotorUp.setDisable(true);
+        leftRotorDown.setDisable(true);
+        midRotorUp.setDisable(true);
+        midRotorDown.setDisable(true);
+        rightRotorUp.setDisable(true);
+        rightRotorDown.setDisable(true);
+
         // Checks to see if the maximum message length is reached
         if(content.length() == 200){
             if(!info.isShowing()){
@@ -550,17 +580,18 @@ public class MainController implements Initializable {
         Button btn = (Button) e.getSource();
         String key = btn.getText();
         content += key;
-        String encodedLetter = enigmaDevice.switchLetter(key);
+        String cypherTextLetter = enigmaDevice.switchLetter(key);
         // Calling the light on method to emulate the enigma lightboard light switch
-        turnOnLight(encodedLetter);
+        turnOnLight(cypherTextLetter);
+        
         // Writing the encoded letter to the writer text area
-        taEncrytedWriterMsg.appendText(encodedLetter);
+        taEncrytedWriterMsg.appendText(cypherTextLetter);
         e.consume();
     }
 
     // Calling the turnlight method
-    private void turnOnLight(String encoded) {
-        StackPane light = lightMap.get(encoded);
+    private void turnOnLight(String cypherTextLetter) {
+        StackPane light = lightMap.get(cypherTextLetter);
 
         if (light != null) {
             // Light display
