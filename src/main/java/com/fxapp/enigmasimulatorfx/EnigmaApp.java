@@ -7,28 +7,17 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
 public class EnigmaApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("splash.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
-        Image img = new Image(getClass().getResource("enigma_logo.png").toExternalForm());
-        stage.getIcons().add(img);
-        Controller controller = (Controller)loader.getController();
-        controller.setPrimaryStage(stage);
-
-        scene.addEventFilter(KeyEvent.ANY, e -> {
-            if (e.getText().isBlank()) {
-                e.consume();
-            }
-        });
-
-        stage.setTitle("Enigma Simulator");
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
     }

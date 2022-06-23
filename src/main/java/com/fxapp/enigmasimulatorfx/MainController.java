@@ -1,16 +1,15 @@
 package com.fxapp.enigmasimulatorfx;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -23,12 +22,11 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-public class Controller implements Initializable {
+public class MainController implements Initializable {
 
     @FXML
     private VBox parent;
@@ -113,7 +111,12 @@ public class Controller implements Initializable {
     int count = 0;
 
     File file;
-    AudioClip sound;
+    AudioClip typesound;
+    AudioClip spinsound;
+    AudioClip plug_in;
+    AudioClip plug_out;
+
+    AudioClip button_click;
 
     Boolean unmuted = true;
 
@@ -133,11 +136,24 @@ public class Controller implements Initializable {
 
 
 
-        try {
-            sound = new AudioClip(getClass().getResource("typesound.mp3").toURI().toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                    typesound = new AudioClip(getClass().getResource("typesound.mp3").toURI().toString());
+                    spinsound = new AudioClip(getClass().getResource("rotor_spin.mp3").toURI().toString());
+                    plug_in = new AudioClip(getClass().getResource("plug_in.mp3").toURI().toString());
+                    plug_out = new AudioClip(getClass().getResource("plug_out.mp3").toURI().toString());
+                    button_click = new AudioClip(getClass().getResource("button_click.mp3").toURI().toString());
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+            });
+
 
         lightMap = new HashMap<String, StackPane>();
         buttonMap = new HashMap<String, Button>();
@@ -209,6 +225,7 @@ public class Controller implements Initializable {
                 btnMuteUnmute.setGraphic(imvMuteUnMute);
                 unmuted = false;
             }else{
+                button_click.play();
                 imvMuteUnMute.setImage((new Image(getClass().getResource("unmute.png").toExternalForm())));
                 btnMuteUnmute.setGraphic(imvMuteUnMute);
                 unmuted = true;
@@ -218,6 +235,9 @@ public class Controller implements Initializable {
         // Left rotor
         leftRotorUp.setOnAction(e ->{
             e.consume();
+            if(unmuted){
+                spinsound.play();
+            }
             enigmaDevice.getLeftRotor().advance();
             if(count < 1){
                 leftRotorStartPos = enigmaDevice.getLeftRotor().alphabet.get(0);
@@ -226,6 +246,9 @@ public class Controller implements Initializable {
 
         leftRotorDown.setOnAction(e ->{
             e.consume();
+            if(unmuted){
+                spinsound.play();
+            }
             enigmaDevice.getLeftRotor().advanceBack();
             if(count < 1){
                 leftRotorStartPos = enigmaDevice.getLeftRotor().alphabet.get(0);
@@ -236,6 +259,9 @@ public class Controller implements Initializable {
         // Middle rotor
         midRotorUp.setOnAction(e ->{
             e.consume();
+            if(unmuted){
+                spinsound.play();
+            }
             enigmaDevice.getMiddleRotor().advance();
             if(count < 1){
                 midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
@@ -244,6 +270,9 @@ public class Controller implements Initializable {
 
         midRotorDown.setOnAction(e ->{
             e.consume();
+            if(unmuted){
+                spinsound.play();
+            }
             enigmaDevice.getMiddleRotor().advanceBack();
             if(count < 1){
                 midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
@@ -253,6 +282,9 @@ public class Controller implements Initializable {
         // Right rotor
         rightRotorUp.setOnAction(e ->{
             e.consume();
+            if(unmuted){
+                spinsound.play();
+            }
             enigmaDevice.getRightRotor().advance();
             if(count < 1){
                 rightRotorStartPos = enigmaDevice.getRightRotor().alphabet.get(0);
@@ -261,6 +293,9 @@ public class Controller implements Initializable {
 
         rightRotorDown.setOnAction(e ->{
             e.consume();
+            if(unmuted){
+                spinsound.play();
+            }
             enigmaDevice.getRightRotor().advanceBack();
             if(count < 1){
                 rightRotorStartPos = enigmaDevice.getRightRotor().alphabet.get(0);
@@ -272,6 +307,9 @@ public class Controller implements Initializable {
        btnRemovePlug.setOnAction(e -> removePlug(e));
 
         btnExport.setOnAction(e ->{
+            if(unmuted){
+                button_click.play();
+            }
             FileChooser fileChooser = new FileChooser();
             //Set the extension
             FileChooser.ExtensionFilter extFilter =
@@ -292,14 +330,15 @@ public class Controller implements Initializable {
 
 
         btnClear.setOnAction(e -> {
+            if(unmuted){
+                button_click.play();
+            }
             count = 0;
             content = "";
             leftRotorStartPos = enigmaDevice.getLeftRotor().alphabet.get(0);
             midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
             rightRotorStartPos = enigmaDevice.getRightRotor().alphabet.get(0);
 
-
-            System.out.println(leftRotorStartPos+" "+midRotorStartPos+" "+rightRotorStartPos);
             taEncrytedWriterMsg.clear();
             plugList.getItems().clear();
             e.consume();
@@ -323,13 +362,12 @@ public class Controller implements Initializable {
             }
             count +=1;
             if(unmuted){
-                sound.play();
+                typesound.play();
             }
 
             String key = event.getText().toUpperCase();
 
             content += key;
-            System.out.println(content.length());
             for(String row : keys) {
                 if (row.indexOf(key) != -1 && !key.isBlank()) {
                     String encoded = enigmaDevice.switchLetter(key);
@@ -355,6 +393,9 @@ public class Controller implements Initializable {
 
 
         btnHelp.setOnAction(e ->{
+            if(unmuted){
+                button_click.play();
+            }
             if(!info.isShowing()){
                 VBox pane = new VBox();
                 pane.setStyle("-fx-background-color: #000;");
@@ -378,7 +419,12 @@ public class Controller implements Initializable {
                 info.getContent().add(pane);
                 info.show(stage);
                 info.centerOnScreen();
-                btnOk.setOnAction(ev -> info.hide());
+                btnOk.setOnAction(ev -> {
+                    if(unmuted){
+                        button_click.play();
+                    }
+                    info.hide();
+                });
             }
 
 
@@ -407,7 +453,7 @@ public class Controller implements Initializable {
             fileWriter.write("\n");
         }
 
-        fileWriter.write("================================\n\n");
+        fileWriter.write("================================\n");
         fileWriter.write("Encrypted Message\n");
         fileWriter.write("================================\n");
         fileWriter.write(text+"\n");
@@ -425,7 +471,12 @@ public class Controller implements Initializable {
         info.getContent().add(pane);
         info.show(stage);
         info.centerOnScreen();
-        btnOk.setOnAction(event -> info.hide());
+        btnOk.setOnAction(event -> {
+            if(unmuted){
+                button_click.play();
+            }
+            info.hide();
+        });
     }
 
     private void keyboardPressedAction(ActionEvent e) {
@@ -446,15 +497,14 @@ public class Controller implements Initializable {
         }
         count +=1;
         if(unmuted){
-            sound.play();
+            typesound.play();
         }
         Button btn = (Button) e.getSource();
         String key = btn.getText();
         content += key;
-        System.out.println(content.length());
-        String encoded = enigmaDevice.switchLetter(key);
-        turnOnLight(encoded);
-        taEncrytedWriterMsg.appendText(encoded);
+        String encodedLetter = enigmaDevice.switchLetter(key);
+        turnOnLight(encodedLetter);
+        taEncrytedWriterMsg.appendText(encodedLetter);
         e.consume();
     }
 
@@ -482,9 +532,13 @@ public class Controller implements Initializable {
 
     private void removePlug(ActionEvent e) {
         e.consume();
+
         MultipleSelectionModel<Plugboard.Plug> select = plugList.getSelectionModel();
         if (select.getSelectedIndex() >= 0) {
             enigmaDevice.getPlugboard().removePlug(select.getSelectedIndex());
+            if(unmuted){
+                plug_out.play();
+            }
         }
     }
 
@@ -517,6 +571,9 @@ public class Controller implements Initializable {
         };
 
         enigmaDevice.getPlugboard().addPlug(firstLetter, secondLetter);
+        if(unmuted){
+            plug_in.play();
+        }
     }
 
 

@@ -12,7 +12,7 @@
     -fx-font-size: 18;
     -fx-font-family: "System";
     */
-    
+
     -fx-font-size: 28;
     -fx-font-family: "1942 report";
     -fx-text-fill: white;
@@ -27,6 +27,9 @@
     -fx-text-fill: white;
 
 }
+
+
+
 
 .button {
     -fx-text-fill: white;
