@@ -167,7 +167,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextArea fx:id="taEncrytedWriterMsg" focusTraversable="false" prefHeight="200.0" prefWidth="200.0">
+                  <TextArea fx:id="taEncrytedWriterMsg" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0">
                      <font>
                         <Font size="14.0" />
                      </font></TextArea>

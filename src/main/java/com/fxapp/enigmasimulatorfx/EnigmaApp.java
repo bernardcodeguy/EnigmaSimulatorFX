@@ -1,3 +1,9 @@
+/*
+    This is the entry point of the enigma application
+    SInce we are using javafx library, we need to extend the Application class
+ */
+
+
 package com.fxapp.enigmasimulatorfx;
 
 import javafx.application.Application;
@@ -22,6 +28,7 @@ public class EnigmaApp extends Application {
         stage.show();
     }
 
+    // This method launches the desktop application
     public static void main(String[] args) {
         launch();
     }
