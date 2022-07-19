@@ -27,7 +27,7 @@ public class Plugboard {
         return letter;
     }
 
-    // Adds a plug when it is called
+    // Adds a plug when it is called recursively
     public void addPlug(String a, String b) {
         addPlug(new Plug(a, b));
     }

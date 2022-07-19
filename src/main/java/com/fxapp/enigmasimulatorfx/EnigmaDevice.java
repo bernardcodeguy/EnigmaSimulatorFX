@@ -29,9 +29,9 @@ public class EnigmaDevice {
         String two = midRotor.switchLetter(one);
         String three = leftRotor.switchLetter(two);
         String reflect = Reflector.reflect(three);
-        String four = leftRotor.invSwitchLetter(reflect);
-        String five = midRotor.invSwitchLetter(four);
-        String six = rightRotor.invSwitchLetter(five);
+        String four = leftRotor.reverseSwitchLetter(reflect);
+        String five = midRotor.reverseSwitchLetter(four);
+        String six = rightRotor.reverseSwitchLetter(five);
         plugged = plugboard.switchLetter(six);
 
         // Rotating the rotors when the position of right rotor is at "W" and "F"
@@ -50,7 +50,7 @@ public class EnigmaDevice {
         return leftRotor;
     }
 
-    public Rotor getMiddleRotor() {
+    public Rotor getMidRotor() {
         return midRotor;
     }
 

@@ -12,7 +12,7 @@ public class Rotor {
     public ObservableList<String> alphabet;
 
     // The alphabets to be used for switching with rotor objects
-    private static String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static String alphabet2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     // Class constructor
     public Rotor (String alphabet) {
@@ -29,15 +29,15 @@ public class Rotor {
 
     // A method to pass a letter to rotor alphabets and plugboards
     public String switchLetter(String letter) {
-        int i = alpha.indexOf(letter);
+        int i = alphabet2.indexOf(letter);
         String c = alphabet.get(i);
         return c;
     }
 
-    // Method for switches related to rotors and reflector
-    public String invSwitchLetter(String letter) {
+    // Method for switches letters in rotors after returning from the reflector
+    public String reverseSwitchLetter(String letter) {
         int i = alphabet.indexOf(letter);
-        String c = alpha.substring(i, i+1);
+        String c = alphabet2.substring(i, i+1);
         return c;
     }
 

@@ -83,9 +83,6 @@ public class MainController implements Initializable {
     private Button midRotorUp;
 
     @FXML
-    private HBox motherPane;
-
-    @FXML
     private ListView<Plugboard.Plug> plugList;
 
     @FXML
@@ -143,7 +140,7 @@ public class MainController implements Initializable {
         // whiles there has not been any keyboard press, we get the starting postion of rotors
         if(count < 1){
             leftRotorStartPos = enigmaDevice.getLeftRotor().alphabet.get(0);
-            midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
+            midRotorStartPos = enigmaDevice.getMidRotor().alphabet.get(0);
             rightRotorStartPos = enigmaDevice.getRightRotor().alphabet.get(0);
         }
 
@@ -236,7 +233,7 @@ public class MainController implements Initializable {
 
         // Setting the alphabets to each rotor
         leftRotor.setItems(enigmaDevice.getLeftRotor().alphabet);
-        middleRotor.setItems(enigmaDevice.getMiddleRotor().alphabet);
+        middleRotor.setItems(enigmaDevice.getMidRotor().alphabet);
         rightRotor.setItems(enigmaDevice.getRightRotor().alphabet);
 
         // This method is called when the mute/unmute button is clicked
@@ -289,9 +286,9 @@ public class MainController implements Initializable {
             if(unmuted){
                 spinsound.play();
             }
-            enigmaDevice.getMiddleRotor().advance();
+            enigmaDevice.getMidRotor().advance();
             if(count < 1){
-                midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
+                midRotorStartPos = enigmaDevice.getMidRotor().alphabet.get(0);
             }
         });
 
@@ -301,9 +298,9 @@ public class MainController implements Initializable {
             if(unmuted){
                 spinsound.play();
             }
-            enigmaDevice.getMiddleRotor().advanceBack();
+            enigmaDevice.getMidRotor().advanceBack();
             if(count < 1){
-                midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
+                midRotorStartPos = enigmaDevice.getMidRotor().alphabet.get(0);
             }
         });
 
@@ -381,7 +378,7 @@ public class MainController implements Initializable {
             content = "";
             // Maintaining the current rotor positions as the thier new starting positions
             leftRotorStartPos = enigmaDevice.getLeftRotor().alphabet.get(0);
-            midRotorStartPos = enigmaDevice.getMiddleRotor().alphabet.get(0);
+            midRotorStartPos = enigmaDevice.getMidRotor().alphabet.get(0);
             rightRotorStartPos = enigmaDevice.getRightRotor().alphabet.get(0);
 
             taEncrytedWriterMsg.clear();

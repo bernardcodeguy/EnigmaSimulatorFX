@@ -24,6 +24,8 @@ public class EnigmaApp extends Application {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.initStyle(StageStyle.UNDECORATED);
+        Image img = new Image(getClass().getResource("enigma_logo.png").toExternalForm());
+        stage.getIcons().add(img);
         stage.setScene(scene);
         stage.show();
     }
